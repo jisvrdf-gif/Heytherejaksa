@@ -1,69 +1,164 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3,#ff9a9e);
   color:white;
   text-align:center;
   overflow:hidden;
 }
-.section{
-  position:absolute;
-  width:100%;
+section{
   height:100vh;
+  width:100%;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:20px;
+  padding:40px 25px;
+  position:absolute;
+  top:0;
+  left:0;
+  transition:opacity 0.8s ease, transform 0.8s ease;
 }
-.hidden{display:none;}
-button{
-  padding:12px 25px;
+.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(1.05);
+}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;
+  margin-bottom:25px;
+}
+p{
+  max-width:750px;
+  font-size:1.15rem;
+  line-height:1.9;
+  margin-bottom:25px;
+  white-space:pre-line;
+}
+.btn{
+  padding:14px 32px;
+  border-radius:30px;
   border:none;
-  border-radius:25px;
-  margin:10px;
-  font-size:16px;
+  font-weight:600;
   cursor:pointer;
+  margin:10px;
+  transition:0.3s ease;
+  font-size:16px;
 }
-.yes{background:white;color:#ff4d6d;font-weight:bold;}
-.no{background:#ff4d6d;color:white;position:relative;}
+.yes{
+  background:white;
+  color:#ff4d6d;
+}
+.yes:hover{
+  transform:scale(1.1);
+  background:#ff4d6d;
+  color:white;
+}
+.no{
+  background:#ff4d6d;
+  color:white;
+  position:relative;
+}
+footer{
+  position:absolute;
+  bottom:25px;
+  font-size:0.95rem;
+  opacity:0.9;
+}
+.hearts{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:-1;
+}
+.heart{
+  position:absolute;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
+}
 </style>
 </head>
-<body><div id="page1" class="section">
+<body><div class="hearts" id="hearts"></div><!-- Page 1 --><section id="page1">
   <h1>Hey You ❤</h1>
-  <p>I made something small for you.</p>
-  <button class="yes" onclick="showPage('page2')">Open It</button>
-</div><div id="page2" class="section hidden">
+  <p>
+  I don't know if you realize this,
+  but meeting you quietly changed something in me.This isn't just a random page. It's something I made because you matter to me more than you think.
+
+  </p>
+  <button class="btn yes" onclick="nextPage('page2')">Open It</button>
+</section><!-- Page 2 --><section id="page2" class="hidden">
   <h1>Will You Be My Valentine?</h1>
-  <button class="yes" onclick="showPage('page3')">Yes ❤</button>
-  <button class="no" id="noBtn">No</button>
-</div><div id="page3" class="section hidden">
+  <p>
+  Not just for today.
+  Not just because it's cute.But because being around you feels easy. It feels warm. It feels like something I want to keep choosing.
+
+  </p>
+  <div>
+    <button class="btn yes" onclick="nextPage('page3')">Yes ❤</button>
+    <button class="btn no" id="noBtn">No</button>
+  </div>
+</section><!-- Page 3 --><section id="page3" class="hidden">
   <h1>I'm So Grateful I Met You</h1>
   <p>
-    Out of all the days and all the coincidences,
-    somehow I met you.
-    And that alone feels like something beautiful.
-    Thank you for being in my life.
+  Out of all the days in my life,
+  out of all the places I could have been,
+  somehow I met you.And that feels like the softest kind of miracle.
+
+You came into my world without noise, without grand announcements, but you stayed in my thoughts longer than you probably know.
+
+The way you talk. The way you exist so effortlessly. The way you make ordinary moments feel lighter.
+
+I don’t need dramatic promises. I don’t need perfect fairy tales.
+
+I just know that meeting you is something I will always be thankful for.
+
+If life rewrote itself a thousand times, I would still hope our paths cross again.
+
+And if you ever doubt it — know that someone here is very, very grateful that you exist.
+
   </p>
-</div><script>
-function showPage(id){
-  document.getElementById('page1').classList.add('hidden');
-  document.getElementById('page2').classList.add('hidden');
-  document.getElementById('page3').classList.add('hidden');
-  document.getElementById(id).classList.remove('hidden');
+  <footer>Forever grateful I met you ❤</footer>
+</section><script>
+function nextPage(pageId){
+  document.querySelectorAll('section').forEach(sec=>{
+    sec.classList.add('hidden');
+  });
+  document.getElementById(pageId).classList.remove('hidden');
 }
 
-var noBtn=document.getElementById('noBtn');
-noBtn.addEventListener('mouseover',function(){
+const noBtn=document.getElementById('noBtn');
+noBtn.addEventListener('mouseover',()=>{
   noBtn.style.position='absolute';
   noBtn.style.top=Math.random()*80+'%';
   noBtn.style.left=Math.random()*80+'%';
 });
+
+const heartsContainer=document.getElementById('hearts');
+function createHeart(){
+  const heart=document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerHTML='❤';
+  heart.style.left=Math.random()*100+'vw';
+  heart.style.fontSize=Math.random()*20+10+'px';
+  heartsContainer.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,300);
 </script></body>
 </html>
